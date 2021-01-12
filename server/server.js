@@ -22,7 +22,7 @@ app.use(require('./routes/usuario'));
 
 
 //*Conexion a mONGOdb
-mongoose.connect('mongodb://localhost:27017/cafe', (err, res) => {
+mongoose.connect('mongodb://localhost:27017/cafe', { useUnifiedTopology: true, useNewUrlParser: true }, (err, res) => {
 
     if (err) throw err;
     console.log(`Database status:` + ' ONLINE'.green);
