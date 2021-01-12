@@ -42,6 +42,15 @@ let usuarioSchema = new Schema({
     }
 });
 
+//! La contraseña es un campo que no es necesario devolverla al usuario en la respuesta por tanto
+usuarioSchema.methods.toJSON = function() {
+    let user = this;
+    let userObject = user.toObject();
+
+    delete userObject.password;
+    return userObject;
+};
+
 usuarioSchema.plugin(uniqueValidator, {
     message: '{PATH} debe de ser único'
 });
