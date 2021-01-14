@@ -25,7 +25,7 @@ app.get('/usuario', function(req, res) {
     //* y despues de los corchetes entre '' se indica que campos mostrar ej: {google: true},'nombre email role estado'
     //*===================================
 
-    Usuario.find({})
+    Usuario.find({ estado: false })
         .skip(desde)
         .limit(10)
         .exec((err, arregloUsuarios) => {
@@ -36,7 +36,7 @@ app.get('/usuario', function(req, res) {
                 });
             }
             //? Indica cuantos elementos hay en total
-            Usuario.count({}, (err, conteo) => {
+            Usuario.countDocuments({ estado: false }, (err, conteo) => {
                 res.json({
                     ok: true,
                     usuarios: arregloUsuarios,
@@ -99,10 +99,42 @@ app.put('/usuario/:id', function(req, res) {
 
 
 
+//! BORRADO FISICO
+/*app.delete('/usuario/:id', function(req, res) {
+    let id = req.params.id;
 
+    Usuario.findByIdAndRemove(id, { useFindAndModify: false }, (err, usuarioBorrado) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!usuarioBorrado) {
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'Usuario no encontrado'
+                }
+            });
+        }
+        res.json({
+            ok: true,
+            usuario: usuarioBorrado
+        });
+    });
+});*/
+
+//! BORRADO LOGICO
 app.delete('/usuario/:id', function(req, res) {
     let id = req.params.id;
-    Usuario.findByIdAndRemove(id, { useFindAndModify: false }, (err, usuarioBorrado) => {
+
+    let cambiaEstado = {
+        estado: false
+    };
+
+    Usuario.findByIdAndUpdate(id, cambiaEstado, { new: true, useFindAndModify: false }, (err, usuarioBorrado) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
