@@ -25,7 +25,7 @@ app.get('/usuario', function(req, res) {
     //* y despues de los corchetes entre '' se indica que campos mostrar ej: {google: true},'nombre email role estado'
     //*===================================
 
-    Usuario.find({ estado: false })
+    Usuario.find({})
         .skip(desde)
         .limit(10)
         .exec((err, arregloUsuarios) => {
@@ -36,7 +36,7 @@ app.get('/usuario', function(req, res) {
                 });
             }
             //? Indica cuantos elementos hay en total
-            Usuario.countDocuments({ estado: false }, (err, conteo) => {
+            Usuario.countDocuments({}, (err, conteo) => {
                 res.json({
                     ok: true,
                     usuarios: arregloUsuarios,
@@ -94,6 +94,9 @@ app.put('/usuario/:id', function(req, res) {
         });
     });
 });
+
+
+
 
 
 
