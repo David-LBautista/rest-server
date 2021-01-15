@@ -15,18 +15,11 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 //* ===========
 //*   Database
 //* ===========
-// if (process.env.NODE_ENV === 'dev') {
-// urlDB = 'mongodb://localhost:27017/cafe';
-// } else {
-urlDB = 'mongodb+srv://regina:DZM2xyzs7Zh4bmSC@cluster0.ria0k.mongodb.net/<dbname>?retryWrites=true&w=majority';
-// }
+if (process.env.NODE_ENV === 'dev') {
+    urlDB = 'mongodb://localhost:27017/cafe';
+} else {
+    urlDB = 'mongodb+srv://regina:DZM2xyzs7Zh4bmSC@cluster0.ria0k.mongodb.net/<dbname>?retryWrites=true&w=majority';
+}
 
 
 process.env.urlDB = urlDB;
-
-
-//! Conexion a mongo
-// mongodb Local : mongodb://localhost:27017/cafe
-// mongoatlas mongodb+srv://regina:<password>@cluster0.ria0k.mongodb.net/<dbname>?retryWrites=true&w=majority
-//?regina
-//?DZM2xyzs7Zh4bmSC
