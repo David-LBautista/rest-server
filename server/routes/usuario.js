@@ -3,7 +3,7 @@ const app = express();
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
-const { verificaToken } = require('./../middlewares/auth');
+const { verificaToken, verificaAdminRole } = require('./../middlewares/auth');
 
 //!Importamos el usuario Schema
 const Usuario = require('../models/usuario');
@@ -48,7 +48,7 @@ app.get('/usuario', verificaToken, function(req, res) {
         });
 });
 
-app.post('/usuario', verificaToken, function(req, res) {
+app.post('/usuario', [verificaToken, verificaAdminRole], function(req, res) {
     let body = req.body;
 
     let usuario = new Usuario({
@@ -74,7 +74,7 @@ app.post('/usuario', verificaToken, function(req, res) {
 });
 
 //* Se debe especificar el path con el /:id
-app.put('/usuario/:id', verificaToken, function(req, res) {
+app.put('/usuario/:id', [verificaToken, verificaAdminRole], function(req, res) {
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
 
@@ -132,7 +132,7 @@ app.put('/usuario/:id', verificaToken, function(req, res) {
 });*/
 
 //! BORRADO LOGICO
-app.delete('/usuario/:id', verificaToken, function(req, res) {
+app.delete('/usuario/:id', [verificaToken, verificaAdminRole], function(req, res) {
     let id = req.params.id;
 
     let cambiaEstado = {
