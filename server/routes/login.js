@@ -46,7 +46,7 @@ app.post('/login', (req, res) => {
                 usuario: usuarioDB,
             },
             //secret
-            'estamos-en-desarrollo', { expiresIn: process.env.CADUCIDAD_TOKEN });
+            process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
 
 
         res.json({
